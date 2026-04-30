@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toko App Premium – TOKO OPPEN PLAY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --bg:       #080c18;
+      --bg2:      #0d1224;
+      --card:     rgba(255,255,255,0.04);
+      --card-border: rgba(255,255,255,0.09);
+      --primary:  #7c6ef9;
+      --primary2: #a78bfa;
+      --accent:   #f0c060;
+      --green:    #22c55e;
+      --text:     #e8ecf5;
+      --muted:    #7a87a8;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* MESH BACKGROUND */
+    .mesh {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 50% at 15% 20%, rgba(124,110,249,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 85% 70%, rgba(167,139,250,0.08) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 50% 50%, rgba(34,197,94,0.04) 0%, transparent 70%);
+    }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
+
+    /* ---- HEADER ---- */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,12,24,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 13px 0;
+    }
+    nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .logo {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800; font-size: 1.2rem;
+      display: flex; align-items: center; gap: 10px;
+      color: #fff; white-space: nowrap;
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      border-radius: 10px;
+      display: grid; place-items: center; font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .logo-sub {
+      font-size: 0.6rem; font-weight: 600; color: var(--muted);
+      letter-spacing: 0.14em; text-transform: uppercase;
+      display: block; line-height: 1; margin-top: 2px;
+    }
+    .nav-links { display: flex; gap: 26px; }
+    .nav-links a { font-size: 0.88rem; font-weight: 500; color: var(--muted); transition: color 0.2s; }
+    .nav-links a:hover { color: #fff; }
+    .btn-wa {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--green); color: #fff;
+      font-weight: 700; font-size: 0.86rem;
+      padding: 9px 18px; border-radius: 50px;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      border: none; cursor: pointer; white-space: nowrap;
+    }
+    .btn-wa:hover { background: #16a34a; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(34,197,94,0.3); }
+    .menu-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; }
+    .mobile-nav {
+      display: none; flex-direction: column; gap: 10px;
+      padding: 14px 20px 18px;
+      background: rgba(8,12,24,0.97);
+      border-bottom: 1px solid var(--card-border);
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { color: var(--muted); font-weight: 500; padding: 5px 0; }
+    .mobile-nav a:hover { color: #fff; }
+
+    /* ---- HERO ---- */
+    .hero { padding: 88px 0 68px; text-align: center; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(124,110,249,0.1);
+      border: 1px solid rgba(124,110,249,0.28);
+      color: var(--primary2);
+      font-size: 0.8rem; font-weight: 600;
+      padding: 6px 14px; border-radius: 50px;
+      margin-bottom: 22px; letter-spacing: 0.04em;
+    }
+    .hero h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2.1rem, 5.5vw, 3.5rem);
+      font-weight: 800; line-height: 1.15;
+      margin-bottom: 18px; color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--primary2), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p { font-size: 1.03rem; color: var(--muted); max-width: 530px; margin: 0 auto 34px; }
+    .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+    .btn-hero {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      color: #fff; font-weight: 700; font-size: 0.98rem;
+      padding: 13px 28px; border-radius: 50px;
+      box-shadow: 0 8px 30px rgba(124,110,249,0.38);
+      transition: transform 0.22s, box-shadow 0.22s;
+      border: none; cursor: pointer; position: relative; overflow: hidden;
+    }
+    .btn-hero:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(124,110,249,0.5); }
+    .btn-outline-hero {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--text);
+      font-weight: 600; font-size: 0.98rem;
+      padding: 12px 26px; border-radius: 50px;
+      border: 1.5px solid var(--card-border);
+      transition: border-color 0.2s, color 0.2s, transform 0.2s; cursor: pointer;
+    }
+    .btn-outline-hero:hover { border-color: var(--primary2); color: var(--primary2); transform: translateY(-3px); }
+    .trust-bar { display: flex; justify-content: center; align-items: center; gap: 28px; flex-wrap: wrap; }
+    .trust-item { display: flex; align-items: center; gap: 7px; font-size: 0.86rem; color: var(--muted); }
+    .trust-item i { color: var(--green); }
+
+    /* ---- STATS ---- */
+    .stats-strip {
+      background: rgba(255,255,255,0.03);
+      border-top: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--card-border);
+      padding: 28px 0;
+    }
+    .stats-inner { display: flex; justify-content: center; gap: 56px; flex-wrap: wrap; }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.75rem; font-weight: 800; color: #fff; display: block;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); }
+
+    /* ---- SECTION COMMON ---- */
+    .section { padding: 76px 0; }
+    .section-header { text-align: center; margin-bottom: 46px; }
+    .section-tag { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--primary2); margin-bottom: 10px; }
+    .section-header h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(1.55rem, 3.5vw, 2.2rem); font-weight: 800;
+      color: #fff; letter-spacing: -0.02em;
+    }
+    .section-header p { color: var(--muted); margin-top: 10px; font-size: 0.95rem; }
+
+    /* ---- APP TABS ---- */
+    .app-tabs { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 38px; }
+    .tab-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 50px;
+      border: 1.5px solid var(--card-border);
+      background: transparent; color: var(--muted);
+      font-size: 0.84rem; font-weight: 600; cursor: pointer;
+      transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    }
+    .tab-btn:hover { border-color: var(--primary2); color: var(--primary2); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      border-color: transparent; color: #fff;
+      box-shadow: 0 4px 18px rgba(124,110,249,0.32);
+    }
+
+    /* ---- APP PANEL ---- */
+    .app-panel { display: none; }
+    .app-panel.active { display: block; }
+    .app-panel-header { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; }
+    .app-icon {
+      width: 50px; height: 50px; border-radius: 13px;
+      display: grid; place-items: center; font-size: 1.5rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--card-border); flex-shrink: 0;
+    }
+    .app-panel-header h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.25rem; font-weight: 800; color: #fff; }
+    .app-panel-header p { color: var(--muted); font-size: 0.86rem; margin-top: 2px; }
+
+    /* ---- PLAN GROUP ---- */
+    .plan-group { margin-bottom: 30px; }
+    .plan-group-title { font-size: 0.76rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary2); margin-bottom: 12px; padding-left: 2px; }
+    .plans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 11px; }
+    .plan-card {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 15px; padding: 17px 15px;
+      display: flex; flex-direction: column;
+      transition: transform 0.22s, border-color 0.22s, box-shadow 0.22s;
+      position: relative; overflow: hidden;
+    }
+    .plan-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(124,110,249,0.07), transparent);
+      opacity: 0; transition: opacity 0.22s;
+    }
+    .plan-card:hover { transform: translateY(-4px); border-color: rgba(124,110,249,0.38); box-shadow: 0 12px 28px rgba(124,110,249,0.12); }
+    .plan-card:hover::before { opacity: 1; }
+    .plan-duration { font-size: 0.79rem; font-weight: 600; color: var(--muted); margin-bottom: 7px; }
+    .plan-price { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.35rem; font-weight: 800; color: #fff; margin-bottom: 14px; line-height: 1; }
+    .plan-price .unit { font-size: 0.88rem; }
+    .plan-card.custom-plan { border-style: dashed; border-color: rgba(240,192,96,0.28); background: rgba(240,192,96,0.04); }
+    .plan-card.custom-plan .plan-price { color: var(--accent); font-size: 0.92rem; line-height: 1.4; }
+    .btn-buy {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--green); color: #fff;
+      font-size: 0.77rem; font-weight: 700;
+      padding: 7px 13px; border-radius: 50px;
+      border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      margin-top: auto; position: relative; overflow: hidden;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn-buy:hover { background: #16a34a; transform: scale(1.04); box-shadow: 0 6px 16px rgba(34,197,94,0.32); }
+
+    /* RIPPLE */
+    .ripple {
+      position: absolute; border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: scale(0); animation: rippleAnim 0.5s linear;
+      pointer-events: none;
+    }
+    @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+
+    /* ---- WHY US ---- */
+    .why-section { padding: 76px 0; background: var(--bg2); }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 18px; }
+    .feature-card {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 18px; padding: 26px 22px;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .feature-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,0.28); }
+    .feature-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      display: grid; place-items: center; font-size: 1.25rem;
+      background: linear-gradient(135deg, rgba(124,110,249,0.18), rgba(167,139,250,0.08));
+      border: 1px solid rgba(124,110,249,0.18); margin-bottom: 16px;
+    }
+    .feature-card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 7px; }
+    .feature-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.62; }
+
+    /* ---- TESTIMONIALS ---- */
+    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(275px, 1fr)); gap: 18px; }
+    .testi-card {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 18px; padding: 22px;
+      transition: transform 0.25s;
+    }
+    .testi-card:hover { transform: translateY(-4px); }
+    .testi-stars { color: var(--accent); font-size: 0.82rem; margin-bottom: 11px; }
+    .testi-text { font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; line-height: 1.65; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 10px; }
+    .testi-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      display: grid; place-items: center; font-weight: 700; font-size: 0.9rem; color: #fff; flex-shrink: 0;
+    }
+    .testi-name { font-weight: 700; font-size: 0.88rem; color: #fff; }
+    .testi-role { font-size: 0.76rem; color: var(--muted); }
+
+    /* ---- FAQ ---- */
+    .faq-section { padding: 76px 0; }
+    .faq-list { max-width: 700px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--card-border); }
+    .faq-q {
+      width: 100%; background: none; border: none; color: var(--text);
+      text-align: left; font-size: 0.95rem; font-weight: 600;
+      padding: 18px 0; display: flex; justify-content: space-between; align-items: center;
+      cursor: pointer; gap: 14px; font-family: 'DM Sans', sans-serif;
+    }
+    .faq-q i { font-size: 0.82rem; color: var(--muted); transition: transform 0.3s, color 0.2s; flex-shrink: 0; }
+    .faq-item.open .faq-q i { transform: rotate(180deg); color: var(--primary2); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; color: var(--muted); font-size: 0.88rem; line-height: 1.7; }
+    .faq-a p { padding-bottom: 18px; }
+    .faq-item.open .faq-a { max-height: 300px; }
+
+    /* ---- CTA BANNER ---- */
+    .cta-banner {
+      margin: 0 0 76px;
+      background: linear-gradient(135deg, rgba(124,110,249,0.16), rgba(167,139,250,0.08));
+      border: 1px solid rgba(124,110,249,0.22);
+      border-radius: 26px; padding: 58px 38px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-banner::before {
+      content: ''; position: absolute; inset: 0; border-radius: 26px;
+      background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(124,110,249,0.13), transparent);
+    }
+    .cta-banner h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(1.5rem, 3.5vw, 2rem); font-weight: 800; color: #fff; margin-bottom: 11px; position: relative; }
+    .cta-banner p { color: var(--muted); margin-bottom: 26px; position: relative; }
+
+    /* ---- FOOTER ---- */
+    footer { background: var(--bg2); border-top: 1px solid var(--card-border); padding: 46px 0 26px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: flex-start; gap: 36px; flex-wrap: wrap; margin-bottom: 36px; }
+    .footer-brand p { font-size: 0.84rem; color: var(--muted); max-width: 270px; line-height: 1.62; margin-top: 10px; }
+    .footer-links h4 { font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 13px; }
+    .footer-links a { display: block; font-size: 0.86rem; color: var(--muted); margin-bottom: 7px; transition: color 0.2s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-copy { text-align: center; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--card-border); padding-top: 22px; }
+    .footer-copy a { color: var(--primary2); }
+
+    /* ---- FLOATING WA ---- */
+    .wa-float {
+      position: fixed; bottom: 22px; right: 22px; z-index: 200;
+      width: 54px; height: 54px; border-radius: 50%;
+      background: var(--green);
+      display: grid; place-items: center; font-size: 1.55rem; color: #fff;
+      box-shadow: 0 6px 22px rgba(34,197,94,0.42);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: none; cursor: pointer;
+    }
+    .wa-float:hover { transform: scale(1.1); box-shadow: 0 10px 30px rgba(34,197,94,0.52); }
+    .wa-float::before {
+      content: ''; position: absolute;
+      width: 100%; height: 100%; border-radius: 50%;
+      background: rgba(34,197,94,0.38);
+      animation: waPulse 2.2s infinite;
+    }
+    @keyframes waPulse {
+      0% { transform: scale(1); opacity: 0.7; }
+      70% { transform: scale(1.6); opacity: 0; }
+      100% { transform: scale(1); opacity: 0; }
+    }
+
+    /* ---- FADE IN ---- */
+    .fade-up { opacity: 0; transform: translateY(26px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .menu-toggle { display: block; }
+      .hero { padding: 58px 0 46px; }
+      .stats-inner { gap: 28px; }
+      .footer-inner { flex-direction: column; }
+      .cta-banner { padding: 38px 22px; }
+      .plans-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+    }
+    @media (max-width: 440px) {
+      .hero h1 { font-size: 1.9rem; }
+      .trust-bar { gap: 14px; }
+      .app-tabs { gap: 5px; }
+      .tab-btn { font-size: 0.78rem; padding: 7px 12px; }
+    }
+  </style>
+</head>
+<body>
+<div class="mesh"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <nav>
+      <div class="logo">
+        <div class="logo-icon">🎬</div>
+        <div>
+          Toko App Premium
+          <span class="logo-sub">TOKO OPPEN PLAY</span>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="#katalog">Katalog</a>
+        <a href="#kenapa">Kenapa Kami</a>
+        <a href="#testimoni">Testimoni</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <a href="https://wa.me/6285944602135?text=Halo%20kak%2C%20saya%20mau%20tanya%20soal%20produk%20di%20Toko%20App%20Premium%20%F0%9F%99%8F" class="btn-wa" target="_blank" rel="noopener">
+          <i class="fa-brands fa-whatsapp"></i> Chat WA
+        </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </nav>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#katalog">Katalog</a>
+      <a href="#kenapa">Kenapa Kami</a>
+      <a href="#testimoni">Testimoni</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge fade-up"><i class="fa-solid fa-bolt"></i> Fast Respon 24 Jam &nbsp;·&nbsp; Aman &nbsp;·&nbsp; Legal &nbsp;·&nbsp; Trusted</div>
+    <h1 class="fade-up" style="transition-delay:.07s">
+      Akses Aplikasi Premium<br><span>Harga Paling Terjangkau</span>
+    </h1>
+    <p class="fade-up" style="transition-delay:.14s">
+      Netflix, Spotify, Canva, CapCut, YouTube Premium &amp; Disney+ — semua ada di sini. Garansi penuh selama masa pakai.
+    </p>
+    <div class="hero-ctas fade-up" style="transition-delay:.2s">
+      <a href="#katalog" class="btn-hero"><i class="fa-solid fa-grid-2"></i> Lihat Katalog</a>
+      <a href="https://wa.me/6285944602135?text=Halo%20kak%2C%20saya%20mau%20konsultasi%20paket%20di%20Toko%20App%20Premium" class="btn-outline-hero" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Tanya Admin</a>
+    </div>
+    <div class="trust-bar fade-up" style="transition-delay:.27s">
+      <div class="trust-item"><i class="fa-solid fa-circle-check"></i> Garansi Masa Aktif</div>
+      <div class="trust-item"><i class="fa-solid fa-circle-check"></i> Proses Cepat &amp; Aman</div>
+      <div class="trust-item"><i class="fa-solid fa-circle-check"></i> 100% Legal</div>
+      <div class="trust-item"><i class="fa-solid fa-circle-check"></i> Respon 24 Jam</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip fade-up">
+  <div class="container">
+    <div class="stats-inner">
+      <div class="stat"><span class="stat-num">1000+</span><span class="stat-label">Pelanggan Aktif</span></div>
+      <div class="stat"><span class="stat-num">6</span><span class="stat-label">Aplikasi Premium</span></div>
+      <div class="stat"><span class="stat-num">24/7</span><span class="stat-label">Fast Respon WA</span></div>
+      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Garansi Aktif</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- KATALOG -->
+<section class="section" id="katalog">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-tag">Katalog Digital</span>
+      <h2>Pilih Aplikasi &amp; Paket Kamu</h2>
+      <p>Klik "Beli via WA" — kamu langsung diarahkan ke WhatsApp kami dengan detail pesanan otomatis.</p>
+    </div>
+
+    <div class="app-tabs fade-up" id="appTabs">
+      <button class="tab-btn active" data-tab="netflix">🎬 Netflix</button>
+      <button class="tab-btn" data-tab="spotify">🎧 Spotify</button>
+      <button class="tab-btn" data-tab="canva">🎨 Canva</button>
+      <button class="tab-btn" data-tab="capcut">🎞 CapCut</button>
+      <button class="tab-btn" data-tab="youtube">📺 YouTube</button>
+      <button class="tab-btn" data-tab="disney">🎥 Disney+</button>
+    </div>
+
+    <!-- NETFLIX -->
+    <div class="app-panel active" id="panel-netflix">
+      <div class="app-panel-header fade-up">
+        <div class="app-icon">🎬</div>
+        <div><h3>Netflix</h3><p>Streaming film &amp; series favorit tanpa batas. Pilih paket sesuai kebutuhan.</p></div>
+      </div>
+      <div class="plan-group fade-up">
+        <div class="plan-group-title">Sharing 1P1U — 1 Profil, 1 Pengguna</div>
+        <div class="plans-grid" id="grid-netflix-1p1u"></div>
+      </div>
+      <div class="plan-group fade-up">
+        <div class="plan-group-title">Sharing 1P2U — 1 Profil, 2 Pengguna</div>
+        <div class="plans-grid" id="grid-netflix-1p2u"></div>
+      </div>
+      <div class="plan-group fade-up">
+        <div class="plan-group-title">Semi / 1 Device</div>
+        <div class="plans-grid" id="grid-netflix-semi"></div>
+      </div>
+    </div>
+
+    <!-- SPOTIFY -->
+    <div class="app-panel" id="panel-spotify">
+      <div class="app-panel-header fade-up">
+        <div class="app-icon">🎧</div>
+        <div><h3>Spotify</h3><p>Musik tanpa iklan, kualitas tinggi, download offline. Nikmati jutaan lagu.</p></div>
+      </div>
+      <div class="plan-group fade-up">
+        <div class="plan-group-title">Individual Plan</div>
+        <div class="plans-grid" id="grid-spotify-individual"></div>
+      </div>
+      <div class="plan-group fade-up">
+        <div class="plan-group-title">Family Plan</div>
+        <div class="plans-grid" id="grid-spotify-family"></div>
+      </div>
+      <div class="plan-group fade-up">
+        <div class="plan-group-title">Mix Plan — Bisa Request Sesuai Kebutuhan</div>
+        <div class="plans-grid" id="grid-spotify-mix"></div>
+      </div>
+    </div>
+
+    <!-- CANVA -->
+    <div class="app-panel" id="panel-canva">
+      <div class="app-panel-header fade-up">
+        <div class="app-icon">🎨</div>
+        <div><h3>Canva Pro</h3><p>Template premium, background remover, brand kit, dan ribuan aset desain eksklusif.</p></div>
+      </div>
+      <div class="plan-group fade-up">
+        <div class="plan-group-title">Member Plan</div>
+        <div class="plans-grid" id="grid-canva-member"></div>
+      </div>
+      <div class="plan-group fade-up">
+        <div class="plan-group-title">Designer Plan</div>
+        <div class="plans-grid" id="grid-canva-designer"></div>
+      </div>
+    </div>
+
+    <!-- CAPCUT -->
+    <div class="app-panel" id="panel-capcut">
+      <div class="app-panel-header fade-up">
+        <div class="app-icon">🎞</div>
+        <div><h3>CapCut Pro</h3><p>Edit video profesional, AI tools, tanpa watermark, akses semua efek premium.</p></div>
+      </div>
+      <div class="plan-group fade-up">
+        <div class="plan-group-title">Sharing — 2 Orang</div>
+        <div class="plans-grid" id="grid-capcut-sharing"></div>
+      </div>
+      <div class="plan-group fade-up">
+        <div class="plan-group-title">Private</div>
+        <div class="plans-grid" id="grid-capcut-private"></div>
+      </div>
+    </div>
+
+    <!-- YOUTUBE -->
+    <div class="app-panel" id="panel-youtube">
+      <div class="app-panel-header fade-up">
+        <div class="app-icon">📺</div>
+        <div><h3>YouTube Premium</h3><p>Nonton tanpa iklan, background play, YouTube Music, download video offline.</p></div>
+      </div>
+      <div class="plan-group fade-up">
+        <div class="plan-group-title">Individual</div>
+        <div class="plans-grid" id="grid-yt-individual"></div>
+      </div>
+      <div class="plan-group fade-up">
+        <div class="plan-group-title">Family</div>
+        <div class="plans-grid" id="grid-yt-family"></div>
+      </div>
+    </div>
+
+    <!-- DISNEY+ -->
+    <div class="app-panel" id="panel-disney">
+      <div class="app-panel-header fade-up">
+        <div class="app-icon">🎥</div>
+        <div><h3>Disney+</h3><p>Marvel, Star Wars, Pixar, National Geographic — semua dalam satu platform premium.</p></div>
+      </div>
+      <div class="plan-group fade-up">
+        <div class="plan-group-title">Sharing Premium — Harian</div>
+        <div class="plans-grid" id="grid-disney-harian"></div>
+      </div>
+      <div class="plan-group fade-up">
+        <div class="plan-group-title">Bulanan — Multi User</div>
+        <div class="plans-grid" id="grid-disney-bulanan"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section" id="kenapa">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-tag">Kenapa Kami?</span>
+      <h2>Terpercaya &amp; Terbukti</h2>
+      <p>Ratusan pelanggan sudah mempercayakan kebutuhan aplikasi premium mereka ke kami.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fade-up"><div class="feature-icon">⚡</div><h3>Fast Respon 24 Jam</h3><p>Admin aktif dan siap membantu kapan saja — pagi, siang, maupun malam. Tidak perlu nunggu lama.</p></div>
+      <div class="feature-card fade-up" style="transition-delay:.07s"><div class="feature-icon">🔒</div><h3>Aman &amp; Legal</h3><p>Semua produk kami 100% aman dan legal. Data kamu terlindungi dan transaksi terjamin keamanannya.</p></div>
+      <div class="feature-card fade-up" style="transition-delay:.14s"><div class="feature-icon">🛡️</div><h3>Garansi Masa Aktif</h3><p>Ada kendala selama masa aktif? Kami siap ganti atau refund tanpa ribet dan tanpa pertanyaan aneh.</p></div>
+      <div class="feature-card fade-up" style="transition-delay:.21s"><div class="feature-icon">💸</div><h3>Harga Termurah</h3><p>Kami berkomitmen memberikan harga paling terjangkau tanpa mengorbankan kualitas layanan sama sekali.</p></div>
+      <div class="feature-card fade-up" style="transition-delay:.28s"><div class="feature-icon">🚀</div><h3>Aktivasi Instan</h3><p>Setelah pembayaran dikonfirmasi, akun aktif dalam hitungan menit. Tidak perlu nunggu berjam-jam.</p></div>
+      <div class="feature-card fade-up" style="transition-delay:.35s"><div class="feature-icon">💬</div><h3>Konsultasi Gratis</h3><p>Bingung pilih paket? Chat kami gratis! Kami bantu kamu memilih paket yang paling sesuai kebutuhan.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" id="testimoni">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-tag">Testimoni</span>
+      <h2>Kata Mereka</h2>
+      <p>Ribuan pelanggan sudah merasakan manfaatnya. Ini pendapat beberapa di antaranya.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card fade-up"><div class="testi-stars">★★★★★</div><p class="testi-text">"Udah langganan Netflix disini 3 bulan lebih. Murah banget, fast respon, dan sejauh ini lancar tanpa masalah. Highly recommend!"</p><div class="testi-author"><div class="testi-avatar">A</div><div><div class="testi-name">Andi R.</div><div class="testi-role">Pelanggan Netflix</div></div></div></div>
+      <div class="testi-card fade-up" style="transition-delay:.07s"><div class="testi-stars">★★★★★</div><p class="testi-text">"Spotify family plan-nya worth banget! Satu akun buat sekeluarga, harganya beda jauh sama beli sendiri. Admin juga ramah."</p><div class="testi-author"><div class="testi-avatar">S</div><div><div class="testi-name">Sari M.</div><div class="testi-role">Pelanggan Spotify</div></div></div></div>
+      <div class="testi-card fade-up" style="transition-delay:.14s"><div class="testi-stars">★★★★★</div><p class="testi-text">"Canva Pro-nya keren! Fitur premium langsung bisa dipakai. Proses aktivasi cepet, nggak sampai 5 menit udah aktif. Mantap!"</p><div class="testi-author"><div class="testi-avatar">D</div><div><div class="testi-name">Dina K.</div><div class="testi-role">Pelanggan Canva</div></div></div></div>
+      <div class="testi-card fade-up" style="transition-delay:.21s"><div class="testi-stars">★★★★★</div><p class="testi-text">"YouTube Premium disini paling murah yang pernah saya dapet. Udah coba beberapa toko, tapi disini paling recommended!"</p><div class="testi-author"><div class="testi-avatar">R</div><div><div class="testi-name">Rizky P.</div><div class="testi-role">Pelanggan YouTube</div></div></div></div>
+      <div class="testi-card fade-up" style="transition-delay:.28s"><div class="testi-stars">★★★★★</div><p class="testi-text">"Beli Disney+ sharing premium disini harganya terjangkau. Langsung aktif setelah transfer, bisa nonton Marvel segera. Keren!"</p><div class="testi-author"><div class="testi-avatar">F</div><div><div class="testi-name">Fauzan T.</div><div class="testi-role">Pelanggan Disney+</div></div></div></div>
+      <div class="testi-card fade-up" style="transition-delay:.35s"><div class="testi-stars">★★★★★</div><p class="testi-text">"CapCut Pro kualitasnya bagus! Edit video pakai semua fitur premium, nggak ada watermark. Admin juga sangat helpful!"</p><div class="testi-author"><div class="testi-avatar">N</div><div><div class="testi-name">Nita W.</div><div class="testi-role">Pelanggan CapCut</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-tag">FAQ</span>
+      <h2>Pertanyaan Umum</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item fade-up"><button class="faq-q">Apakah akun ini aman digunakan? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a"><p>Ya, 100% aman. Semua produk kami legal dan tidak melanggar ketentuan layanan. Akun sharing kami dikelola secara profesional untuk menjamin stabilitas dan keamanan.</p></div></div>
+      <div class="faq-item fade-up"><button class="faq-q">Bagaimana cara pemesanan? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a"><p>Sangat mudah! Cukup klik tombol "Beli via WA" pada paket yang kamu inginkan, kamu akan langsung diarahkan ke WhatsApp kami dengan pesan otomatis. Admin kami akan membantu proses selanjutnya.</p></div></div>
+      <div class="faq-item fade-up"><button class="faq-q">Berapa lama proses aktivasi akun? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a"><p>Setelah pembayaran dikonfirmasi, akun biasanya aktif dalam 5–15 menit. Jika ada kendala, admin kami siap membantu 24 jam penuh.</p></div></div>
+      <div class="faq-item fade-up"><button class="faq-q">Metode pembayaran apa saja yang tersedia? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a"><p>Kami menerima transfer bank (BCA, BRI, Mandiri, BNI), dompet digital (GoPay, OVO, Dana, ShopeePay), dan QRIS. Tanyakan ke admin untuk konfirmasi metode terkini.</p></div></div>
+      <div class="faq-item fade-up"><button class="faq-q">Bagaimana jika akun bermasalah di tengah masa aktif? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a"><p>Kami memberikan garansi penuh selama masa aktif. Jika ada kendala, hubungi admin dan kami akan segera ganti akun atau extend masa aktif kamu tanpa biaya tambahan.</p></div></div>
+      <div class="faq-item fade-up"><button class="faq-q">Apakah bisa request paket di luar daftar? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a"><p>Tentu! Kami menyediakan Mix Plan untuk Spotify dan bisa diskusikan paket custom untuk kebutuhan lainnya. Chat langsung ke admin kami untuk info lebih lanjut.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="container">
+  <div class="cta-banner fade-up">
+    <h2>Siap Langganan Sekarang? 🎉</h2>
+    <p>Hubungi kami via WhatsApp sekarang juga. Admin kami siap membantu kamu 24 jam.</p>
+    <a href="https://wa.me/6285944602135?text=Halo%20kak%2C%20saya%20mau%20order%20aplikasi%20premium%20dari%20Toko%20Oppen%20Play%20%F0%9F%99%8F" class="btn-hero" target="_blank" rel="noopener">
+      <i class="fa-brands fa-whatsapp"></i> Chat Sekarang via WhatsApp
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo"><div class="logo-icon">🎬</div><div>Toko App Premium<span class="logo-sub">TOKO OPPEN PLAY</span></div></div>
+        <p>Toko terpercaya untuk kebutuhan aplikasi premium digital. Harga terbaik, layanan terbaik.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Aplikasi</h4>
+        <a href="#katalog" onclick="switchTab('netflix');return true;">Netflix</a>
+        <a href="#katalog" onclick="switchTab('spotify');return true;">Spotify</a>
+        <a href="#katalog" onclick="switchTab('canva');return true;">Canva</a>
+        <a href="#katalog" onclick="switchTab('capcut');return true;">CapCut</a>
+        <a href="#katalog" onclick="switchTab('youtube');return true;">YouTube Premium</a>
+        <a href="#katalog" onclick="switchTab('disney');return true;">Disney+</a>
+      </div>
+      <div class="footer-links">
+        <h4>Informasi</h4>
+        <a href="#kenapa">Kenapa Kami</a>
+        <a href="#testimoni">Testimoni</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://wa.me/6285944602135" target="_blank" rel="noopener">Hubungi Admin</a>
+      </div>
+    </div>
+    <p class="footer-copy">&copy; 2025 <strong>Toko App Premium — TOKO OPPEN PLAY</strong> &nbsp;·&nbsp; Semua hak dilindungi &nbsp;·&nbsp; <a href="https://wa.me/6285944602135" target="_blank" rel="noopener">WA: 085944602135</a></p>
+  </div>
+</footer>
+
+<!-- FLOATING WA -->
+<a href="https://wa.me/6285944602135?text=Halo%20kak%2C%20saya%20mau%20tanya%20soal%20produk%20Toko%20App%20Premium%20%F0%9F%99%8F" class="wa-float" target="_blank" rel="noopener" title="Chat WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<script>
+// ==================== PRODUCT DATA ====================
+const WA = '6285944602135';
+
+const products = {
+  'netflix-1p1u': { app:'Netflix', plan:'Sharing 1P1U', items:[
+    {dur:'1 Hari',price:5000},{dur:'2 Hari',price:7000},{dur:'3 Hari',price:9000},
+    {dur:'7 Hari',price:15000},{dur:'14 Hari',price:22000},{dur:'1 Bulan',price:30000}
+  ]},
+  'netflix-1p2u': { app:'Netflix', plan:'Sharing 1P2U', items:[
+    {dur:'14 Hari',price:15000},{dur:'1 Bulan',price:27000},{dur:'2 Bulan',price:37000},{dur:'3 Bulan',price:53000}
+  ]},
+  'netflix-semi': { app:'Netflix', plan:'Semi / 1 Device', items:[{dur:'1 Bulan',price:55000}]},
+  'spotify-individual': { app:'Spotify', plan:'Individual Plan', items:[
+    {dur:'1 Bulan',price:33000},{dur:'2 Bulan',price:45000},{dur:'3 Bulan',price:55000}
+  ]},
+  'spotify-family': { app:'Spotify', plan:'Family Plan', items:[
+    {dur:'1 Bulan',price:25000},{dur:'2 Bulan',price:50000},{dur:'3 Bulan',price:75000}
+  ]},
+  'spotify-mix': { app:'Spotify', plan:'Mix Plan', items:[{dur:'Custom',price:null}]},
+  'canva-member': { app:'Canva Pro', plan:'Member', items:[
+    {dur:'1 Bulan',price:10000},{dur:'3 Bulan',price:15000},{dur:'6 Bulan',price:25000}
+  ]},
+  'canva-designer': { app:'Canva Pro', plan:'Designer', items:[
+    {dur:'1 Bulan',price:12000},{dur:'3 Bulan',price:17000},{dur:'6 Bulan',price:25000}
+  ]},
+  'capcut-sharing': { app:'CapCut Pro', plan:'Sharing (2 Orang)', items:[
+    {dur:'1 Bulan',price:31000},{dur:'2 Bulan',price:60000}
+  ]},
+  'capcut-private': { app:'CapCut Pro', plan:'Private', items:[
+    {dur:'7 Hari',price:15000},{dur:'1 Bulan',price:50000}
+  ]},
+  'yt-individual': { app:'YouTube Premium', plan:'Individual', items:[
+    {dur:'1 Bulan',price:20000},{dur:'3 Bulan',price:39000}
+  ]},
+  'yt-family': { app:'YouTube Premium', plan:'Family', items:[
+    {dur:'1 Bulan',price:15000},{dur:'2 Bulan',price:20000}
+  ]},
+  'disney-harian': { app:'Disney+', plan:'Sharing Premium', items:[
+    {dur:'1 Hari',price:5000},{dur:'2 Hari',price:11000},{dur:'3 Hari',price:14000},{dur:'7 Hari',price:23000}
+  ]},
+  'disney-bulanan': { app:'Disney+', plan:'Bulanan', items:[
+    {dur:'6 User',price:35000},{dur:'5 User',price:40000},{dur:'4 User',price:48000},{dur:'3 User',price:58000}
+  ]}
+};
+
+function fmt(n){ return n >= 1000 ? (n/1000)+'K' : n; }
+
+function waMsg(app, plan, dur, price){
+  const p = price !== null ? 'Rp'+fmt(price) : 'harga sesuai request';
+  return encodeURIComponent(`Halo kak, saya mau order ${app} paket ${plan} durasi ${dur} harga ${p}. Terima kasih 🙏`);
+}
+
+function renderGrid(id, key){
+  const el = document.getElementById(id);
+  if(!el) return;
+  const d = products[key];
+  if(!d) return;
+  el.innerHTML = '';
+  d.items.forEach(item => {
+    const isCustom = item.price === null;
+    const card = document.createElement('div');
+    card.className = 'plan-card' + (isCustom ? ' custom-plan' : '');
+    const priceHtml = isCustom
+      ? `<div class="plan-price" style="font-size:.9rem;line-height:1.4;color:var(--accent)">Request via<br>WhatsApp</div>`
+      : `<div class="plan-price"><span class="unit">Rp</span>${fmt(item.price)}</div>`;
+    const href = `https://wa.me/${WA}?text=${waMsg(d.app, d.plan, item.dur, item.price)}`;
+    card.innerHTML = `
+      <div class="plan-duration">${item.dur}</div>
+      ${priceHtml}
+      <a href="${href}" target="_blank" rel="noopener" class="btn-buy">
+        <i class="fa-brands fa-whatsapp"></i> Beli via WA
+      </a>`;
+    el.appendChild(card);
+  });
+}
+
+Object.keys(products).forEach(k => renderGrid('grid-' + k, k));
+
+// ==================== TABS ====================
+function switchTab(name){
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.app-panel').forEach(p => p.classList.remove('active'));
+  const btn = document.querySelector(`[data-tab="${name}"]`);
+  const panel = document.getElementById(`panel-${name}`);
+  if(btn) btn.classList.add('active');
+  if(panel) panel.classList.add('active');
+}
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    switchTab(btn.dataset.tab);
+  });
+});
+
+// ==================== MOBILE NAV ====================
+const menuToggle = document.getElementById('menuToggle');
+const mobileNav  = document.getElementById('mobileNav');
+menuToggle.addEventListener('click', () => mobileNav.classList.toggle('open'));
+mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileNav.classList.remove('open')));
+
+// ==================== FAQ ====================
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const open = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if(!open) item.classList.add('open');
+  });
+});
+
+// ==================== SCROLL FADE ====================
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.11 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+// ==================== RIPPLE ====================
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.btn-buy, .btn-hero, .btn-wa, .btn-outline-hero');
+  if(!btn) return;
+  const r = btn.getBoundingClientRect();
+  const rip = document.createElement('span');
+  const sz = Math.max(r.width, r.height);
+  rip.className = 'ripple';
+  rip.style.cssText = `width:${sz}px;height:${sz}px;left:${e.clientX-r.left-sz/2}px;top:${e.clientY-r.top-sz/2}px`;
+  btn.style.position = 'relative';
+  btn.style.overflow = 'hidden';
+  btn.appendChild(rip);
+  rip.addEventListener('animationend', () => rip.remove());
+});
+</script>
+</body>
+</html>
